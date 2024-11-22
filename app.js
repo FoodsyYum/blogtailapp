@@ -144,6 +144,14 @@ app.use('/dashboard', dashboard);
 app.use('/settings', settings);
 
 /**
+* 404 page
+*/
+
+app.get('*', (req, res) => {
+    res.status(404).render('./pages/404');
+});
+
+/**
  * start server
  */
 
