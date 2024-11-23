@@ -86,13 +86,7 @@ app.use(session({
  * cors policy to secure
  */
 const corsOptions = {
-    origin: function (origin, callback) {
-        if (origin === 'https://blogtail.onrender.com' || origin === 'http://localhost:10000) {
-            callback(null, true);  // Allow the request
-        } else {
-            callback(new Error('Not allowed by CORS'));
-        }
-    }
+    origin: 'https://blogtail.onrender.com'
 };
 
 app.use(cors(corsOptions));
