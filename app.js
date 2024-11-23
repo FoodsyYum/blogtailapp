@@ -8,6 +8,7 @@ const express = require('express');
 require('dotenv').config();
 const session = require('express-session');
 const MongoStore = require('connect-mongo');
+const cors = require('cors');
 
 /**
  * custom modules
@@ -82,6 +83,21 @@ app.use(session({
 }));
 
 /**
+ * cors policy to secure
+ */
+const corsOptions = {
+    origin: function (origin, callback) {
+        if (origin === 'https://blogtail.onrender.com') {
+            callback(null, true);  // Allow the request
+        } else {
+            callback(new Error('Not allowed by CORS'));
+        }
+    }
+};
+
+app.use(cors(corsOptions));
+
+/**
  * register page
  */
 app.use('/register', register);
@@ -142,6 +158,14 @@ app.use('/dashboard', dashboard);
  * settings page
  */
 app.use('/settings', settings);
+
+/**
+* 404 page
+*/
+
+app.get('*', (req, res) => {
+    res.status(404).render('./pages/404');
+});
 
 /**
  * start server
